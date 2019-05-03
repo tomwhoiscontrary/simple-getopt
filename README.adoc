@@ -9,3 +9,5 @@ You configure the short equivalents of long flags (flags have to have a long for
 The parsing process doesn't know anything about the number or format of positional arguments or flags, but the querying API lets you express that in terms of optionals and parser functions.
 
 It should be reasonably self-explanatory. See CalendarExample.java for an example.
+
+This is not in JCenter at the moment, but it should be.
