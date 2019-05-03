@@ -1,0 +1,17 @@
+plugins {
+    id 'java-library'
+}
+
+def javaVersion = '1.8'
+assert System.getProperty("java.version").startsWith(javaVersion)
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.hamcrest:hamcrest:2.1'
+}
