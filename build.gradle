@@ -15,3 +15,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest:2.1'
 }
+
+task examples
+check.dependsOn examples
+
+// let's see you do this in Bazel, eh?
+compileTestJava.source.filter { it.name == 'CalendarExample.java' }.singleFile.eachLine { line ->
+    def match = line =~ / * <dt>([^<]*)<\/dt><dd>([^<]*)<\/dd>/
+    if (!match) return
+
+    examples.dependsOn task("example (${match.group(1)})", type: JavaExec) {
+        classpath = sourceSets.test.runtimeClasspath
+        main = 'li.earth.urchin.twic.getopt.CalendarExample'
+        args = match.group(2).split() as List
+    }
+}
