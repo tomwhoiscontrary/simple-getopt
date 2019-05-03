@@ -1,0 +1,11 @@
+This is a utility to parse command line arguments in a simplified form of common getopt style.
+
+You get positional arguments, long flags with double dashes, and short flags with single dashes which can be grouped together. Flags can take a value from a following argument.
+
+You don't get flags which take values with an equals sign, @-files, repeatable flags, double dashes to end flags, or a help message.
+
+You configure the short equivalents of long flags (flags have to have a long form!). You configure which flags take values. There's nothing else to configure. Any number of positional arguments and valueless flags will be accepted.
+
+The parsing process doesn't know anything about the number or format of positional arguments or flags, but the querying API lets you express that in terms of optionals and parser functions.
+
+It should be reasonably self-explanatory. See CalendarExample.java for an example.
