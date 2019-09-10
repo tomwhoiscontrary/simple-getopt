@@ -30,3 +30,9 @@ compileTestJava.source.filter { it.name == 'CalendarExample.java' }.singleFile.e
         args = match.group(2).split() as List
     }
 }
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
+}
+assemble.dependsOn sourcesJar
