@@ -3,9 +3,11 @@ plugins {
 }
 
 def javaVersion = '1.8'
-assert System.getProperty("java.version").startsWith(javaVersion)
+assert System.getProperty('java.version').startsWith(javaVersion)
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
+
+version = '1.0.0'
 
 repositories {
     jcenter()
@@ -31,8 +33,17 @@ compileTestJava.source.filter { it.name == 'CalendarExample.java' }.singleFile.e
     }
 }
 
+jar {
+    manifest {
+        attributes(['Implementation-Title'  : project.name,
+                    'Implementation-Version': version,
+                    'Implementation-URL'    : 'https://github.com/tomwhoiscontrary/simple-getopt'])
+    }
+}
+
 task sourcesJar(type: Jar) {
     archiveClassifier = 'sources'
     from sourceSets.main.allJava
+    manifest = jar.manifest
 }
 assemble.dependsOn sourcesJar
