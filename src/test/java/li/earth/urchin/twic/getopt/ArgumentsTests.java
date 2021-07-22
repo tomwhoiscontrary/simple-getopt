@@ -98,6 +98,14 @@ public class ArgumentsTests {
             assertThat(args.getFlags(), equalTo(mapOf("qux", Arguments.NO_VALUE, "foo", "red", "baz", Arguments.NO_VALUE, "bar", "green")));
         }
 
+        @Test
+        public void mixtureInAList() {
+            Arguments args = Arguments.of(Arrays.asList("one", "--qux", "two", "-fB", "red", "three", "--bar", "green", "four"), mapOf("f", "foo", "b", "bar", "B", "baz"), setOf("foo", "bar"));
+
+            assertThat(args.getPositional(), equalTo(listOf("one", "two", "three", "four")));
+            assertThat(args.getFlags(), equalTo(mapOf("qux", Arguments.NO_VALUE, "foo", "red", "baz", Arguments.NO_VALUE, "bar", "green")));
+        }
+
     }
 
     public static class Querying {

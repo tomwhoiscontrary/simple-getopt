@@ -1,7 +1,9 @@
 package li.earth.urchin.twic.getopt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -15,17 +17,21 @@ public class Arguments {
     public static final String NO_VALUE = new String("");
 
     public static Arguments of(String[] args, Map<String, String> shortFlags, Set<String> flagsWithArgs) {
+        return of(Arrays.asList(args), shortFlags, flagsWithArgs);
+    }
+
+    public static Arguments of(List<String> args, Map<String, String> shortFlags, Set<String> flagsWithArgs) {
         List<String> positional = new ArrayList<>();
         Map<String, String> flags = new HashMap<>();
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
+        Iterator<String> argsIt = args.iterator();
+        while (argsIt.hasNext()) {
+            String arg = argsIt.next();
             if (arg.startsWith("--")) {
                 String flag = arg.substring(2);
                 String value;
                 if (flagsWithArgs.contains(flag)) {
-                    value = args[i + 1];
-                    ++i;
+                    value = argsIt.next();
                 } else {
                     value = NO_VALUE;
                 }
@@ -37,8 +43,7 @@ public class Arguments {
                     if (flag == null) throw new IllegalArgumentException("unknown short flag: " + shortFlag);
                     String value;
                     if (flagsWithArgs.contains(flag)) {
-                        value = args[i + 1];
-                        ++i;
+                        value = argsIt.next();
                     } else {
                         value = NO_VALUE;
                     }
