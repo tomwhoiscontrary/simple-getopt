@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -29,24 +30,13 @@ public class Arguments {
             String arg = argsIt.next();
             if (arg.startsWith("--")) {
                 String flag = arg.substring(2);
-                String value;
-                if (flagsWithArgs.contains(flag)) {
-                    value = argsIt.next();
-                } else {
-                    value = NO_VALUE;
-                }
+                String value = flagsWithArgs.contains(flag) ? argsIt.next() : NO_VALUE;
                 flags.put(flag, value);
             } else if (arg.startsWith("-")) {
                 for (int j = 1; j < arg.length(); j++) {
                     String shortFlag = arg.substring(j, j + 1);
-                    String flag = shortFlags.get(shortFlag);
-                    if (flag == null) throw new IllegalArgumentException("unknown short flag: " + shortFlag);
-                    String value;
-                    if (flagsWithArgs.contains(flag)) {
-                        value = argsIt.next();
-                    } else {
-                        value = NO_VALUE;
-                    }
+                    String flag = Objects.requireNonNull(shortFlags.get(shortFlag), () -> "unknown short flag: " + shortFlag);
+                    String value = flagsWithArgs.contains(flag) ? argsIt.next() : NO_VALUE;
                     flags.put(flag, value);
                 }
             } else {
