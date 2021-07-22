@@ -52,8 +52,8 @@ public class Arguments {
         return new Arguments(positional, flags);
     }
 
-    private List<String> positional;
-    private Map<String, String> flags;
+    private final List<String> positional;
+    private final Map<String, String> flags;
 
     private Arguments(List<String> positional, Map<String, String> flags) {
         this.positional = positional;
